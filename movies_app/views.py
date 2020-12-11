@@ -1,17 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Movie
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 
 class MovieList(ListView):
     model = Movie
     template_name = 'movies/index.html'
 
-
 class MovieCreate(CreateView):
     model = Movie
     fields = '__all__'
+
+class MovieUpdate(UpdateView):
+    model = Movie
+    fields = ['release_year', 'director', 'genre']
+
+class MovieDelete(DeleteView):
+    model = Movie
+    success_url = '/movies/'
 
 def home(request):
     return HttpResponse('<h1>Hello</h1>')
