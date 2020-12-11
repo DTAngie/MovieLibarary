@@ -3,7 +3,7 @@
 
 <h1>Movie List</h1>
 
-{% for movie in movies %}
+{% for movie in movie_list %}
   <div class="card">
     <a href="{% url 'detail' movie.id %}">
     <div class="card-content">
