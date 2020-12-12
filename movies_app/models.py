@@ -8,12 +8,22 @@ AWARDS = (
     ('S', 'Screen Actors Guild'),
 )
 
+class Performer(models.Model):
+    first = models.CharField(max_length=100)
+    last = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.first} {self.last}"
+
+    def get_absolute_url(self):
+        return reverse('performer_detail', kwargs={'pk': self.id})
 
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     release_year = models.IntegerField()
     director = models.CharField(max_length=100)
     genre = models.CharField(max_length=100)
+    cast = models.ManyToManyField(Performer)
 
     def __str__(self):
         return self.title
