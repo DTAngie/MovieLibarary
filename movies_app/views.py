@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Movie
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from .forms import AwardForm
 
 
 class MovieList(ListView):
@@ -32,4 +33,13 @@ def about(request):
 
 def movies_detail(request, movie_id):
     movie = Movie.objects.get(pk=movie_id)
-    return render(request, 'movies/detail.html', {'movie': movie})
+    award_form = AwardForm()
+    return render(request, 'movies/detail.html', {'movie': movie, 'award_form': award_form})
+
+def add_award(request, movie_id):
+    form = AwardForm(request.POST)
+    if form.is_valid():
+        new_award = form.save(commit=False)
+        new_award.movie_id = movie_id
+        new_award.save()
+    return redirect('detail', movie_id=movie_id)
