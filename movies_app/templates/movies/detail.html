@@ -23,7 +23,12 @@
             {% csrf_token %}
             {{ award_form.as_p }}
             <input type="submit" class="btn" value="Add Award">
-          </form>
+        </form>
+        {% if movie.is_popular %}
+            <div class="card-panel teal-text center-align">{{movie.title}} is a popular film!</div>
+        {% else %}
+            <div class="card-panel red-text center-align">{{movie.title}} may have been a rotten tomato.</div>
+        {% endif %}
         <table class="striped">
             <thead>
             <tr><th>Year</th><th>Name</th><th>Category</th></tr>

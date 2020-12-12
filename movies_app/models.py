@@ -21,6 +21,9 @@ class Movie(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'movie_id': self.id})
 
+    def is_popular(self):
+        return self.award_set.all().count() > 2
+
 class Award(models.Model):
     year = models.IntegerField()
     category = models.CharField(max_length=100)
@@ -34,3 +37,6 @@ class Award(models.Model):
 
     def __str__(self):
         return f"{self.get_award_display()} on {self.date}"
+    
+    class Meta:
+        ordering = ['-year']
